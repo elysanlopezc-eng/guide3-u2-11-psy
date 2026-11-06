@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colegio Montano - Descriptive Research Methods</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        montano: {
+                            blue: '#1269A8',
+                            yellow: '#F7D615',
+                            teal: '#54887D',
+                            lightBlue: '#88B5C7',
+                            olive: '#A6B046',
+                            softWhite: '#F2F5E9'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Nunito', 'Segoe UI', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #E2E8F0;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+        }
+
+        /* Digital Whiteboard Frame Styling */
+        .whiteboard-frame {
+            background-color: #F2F5E9;
+            border: 12px solid #334155;
+            border-radius: 24px;
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.3), 0 0 15px rgba(18, 105, 168, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn {
+            transition: all 0.25s ease;
+        }
+
+        .tab-btn.active {
+            background-color: #1269A8;
+            color: #ffffff;
+            border-bottom: 4px solid #F7D615;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F2F5E9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #88B5C7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1269A8;
+        }
+
+        .pulse-ring {
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(247, 214, 21, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(247, 214, 21, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(247, 214, 21, 0); }
+        }
+    </style>
+</head>
+<body class="p-2 sm:p-4 md:p-6 min-h-screen">
+
+    <!-- Main Container / Digital Whiteboard Frame -->
+    <div id="whiteboard" class="whiteboard-frame max-w-7xl mx-auto p-4 sm:p-6 md:p-8 flex flex-col min-h-[90vh]">
+        
+        <!-- Header Section -->
+        <header class="flex flex-col md:flex-row justify-between items-center border-b-4 border-montano-blue pb-4 mb-6 gap-4">
+            <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-start">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyEop0yf6lZ7Jk9MILZxF1rBj4Oqs5esyhIQ&s" 
+                     alt="Colegio Montano Logo" 
+                     class="h-14 sm:h-16 w-auto object-contain rounded-lg shadow-sm border border-gray-200 bg-white p-1"
+                     onerror="this.onerror=null; this.src='https://placehold.co/150x60/1269A8/ffffff?text=Montano';">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-montano-teal">High School - 4to Bachillerato (B2 Level) • Guide 3</span>
+                    <h1 class="text-xl sm:text-2xl font-extrabold text-montano-blue leading-tight">Descriptive Research Methods</h1>
+                    <p class="text-xs text-gray-600 font-semibold">Observations, Surveys, Interviews, Case Studies & Correlational Research</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+                <button onclick="toggleFullscreen()" title="Toggle Digital Whiteboard Fullscreen"
+                        class="flex items-center gap-2 bg-montano-blue hover:bg-montano-teal text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md transition-all active:scale-95">
+                    <i class="fa-solid fa-expand text-montano-yellow"></i>
+                    <span class="hidden sm:inline">Fullscreen Whiteboard</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Interactive Horizontal Navigation Tabs -->
+        <nav class="flex overflow-x-auto gap-2 pb-2 mb-6 border-b border-gray-300 scrollbar-thin">
+            <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn active whitespace-nowrap px-4 py-3 rounded-t-xl font-bold text-sm sm:text-base flex items-center gap-2 text-gray-700 hover:bg-montano-lightBlue hover:text-white">
+                <i class="fa-solid fa-book-open text-montano-yellow"></i> 1. Theoretical Foundations & Lesson Agenda
+            </button>
+            <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn whitespace-nowrap px-4 py-3 rounded-t-xl font-bold text-sm sm:text-base flex items-center gap-2 text-gray-700 hover:bg-montano-lightBlue hover:text-white">
+                <i class="fa-solid fa-lightbulb text-montano-yellow"></i> 2. Solved Examples (15)
+            </button>
+            <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn whitespace-nowrap px-4 py-3 rounded-t-xl font-bold text-sm sm:text-base flex items-center gap-2 text-gray-700 hover:bg-montano-lightBlue hover:text-white">
+                <i class="fa-solid fa-sliders text-montano-yellow"></i> 3. Voice Simulator & Method Dashboard
+            </button>
+            <button onclick="switchTab('tab4')" id="btn-tab4" class="tab-btn whitespace-nowrap px-4 py-3 rounded-t-xl font-bold text-sm sm:text-base flex items-center gap-2 text-gray-700 hover:bg-montano-lightBlue hover:text-white">
+                <i class="fa-solid fa-brain text-montano-yellow"></i> 4. Critical Reflection & Project Checkpoint
+            </button>
+            <button onclick="switchTab('tab5')" id="btn-tab5" class="tab-btn whitespace-nowrap px-4 py-3 rounded-t-xl font-bold text-sm sm:text-base flex items-center gap-2 text-gray-700 hover:bg-montano-lightBlue hover:text-white">
+                <i class="fa-solid fa-list-check text-montano-yellow"></i> 5. Formative Evaluation (15)
+            </button>
+        </nav>
+
+        <!-- TAB CONTENT CONTAINER -->
+        <main class="flex-grow">
+
+            <!-- TAB 1: Theoretical Foundations & Lesson Agenda -->
+            <section id="tab1" class="tab-content block space-y-6">
+                <!-- 1-Hour Instructional Blueprint -->
+                <div class="bg-white border-l-8 border-montano-yellow p-5 rounded-2xl shadow-sm">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="bg-montano-yellow text-montano-blue text-xs font-black px-3 py-1 rounded-full uppercase">1-Hour Class Structure</span>
+                        <h2 class="text-lg font-bold text-montano-blue">Instructional Agenda: Master Descriptive Methodologies</h2>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mt-3">
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-montano-lightBlue text-center">
+                            <span class="text-xs font-extrabold text-montano-blue block">5 Min</span>
+                            <span class="text-[11px] text-gray-700 font-semibold">Review Questions</span>
+                        </div>
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-montano-teal text-center">
+                            <span class="text-xs font-extrabold text-montano-teal block">15 Min</span>
+                            <span class="text-[11px] text-gray-700 font-semibold">Explain Methods</span>
+                        </div>
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-montano-olive text-center">
+                            <span class="text-xs font-extrabold text-montano-olive block">15 Min</span>
+                            <span class="text-[11px] text-gray-700 font-semibold">Method Matching</span>
+                        </div>
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-montano-blue text-center">
+                            <span class="text-xs font-extrabold text-montano-blue block">15 Min</span>
+                            <span class="text-[11px] text-gray-700 font-semibold">Compare Strengths & Bias</span>
+                        </div>
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-montano-yellow text-center">
+                            <span class="text-xs font-extrabold text-montano-blue block">10 Min</span>
+                            <span class="text-[11px] text-gray-700 font-semibold">Project Workshop & Feedback</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5-Min Warm Up Review -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-montano-blue shadow-sm">
+                    <h3 class="text-lg font-extrabold text-montano-blue mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left text-montano-yellow"></i> 5-Minute Review (Research Questions & Variables Check)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-3 bg-montano-softWhite rounded-xl border border-gray-200">
+                            <span class="text-xs font-bold text-montano-blue block mb-1">1. Research Questions</span>
+                            <p class="text-xs text-gray-700">How does a descriptive research question differ from an experimental question?</p>
+                        </div>
+                        <div class="p-3 bg-montano-softWhite rounded-xl border border-gray-200">
+                            <span class="text-xs font-bold text-montano-teal block mb-1">2. Measuring Behaviors</span>
+                            <p class="text-xs text-gray-700">Why are operational definitions crucial when recording observed actions?</p>
+                        </div>
+                        <div class="p-3 bg-montano-softWhite rounded-xl border border-gray-200">
+                            <span class="text-xs font-bold text-montano-olive block mb-1">3. Non-Experimental Scope</span>
+                            <p class="text-xs text-gray-700">Why can descriptive methods describe patterns but NEVER prove causation?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Descriptive Methods Theoretical Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Naturalistic Observation & Case Studies -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-montano-blue shadow-md flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-3 text-montano-blue mb-3">
+                                <i class="fa-solid fa-eye text-2xl"></i>
+                                <h3 class="text-lg font-bold">Observation & Case Studies</h3>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">
+                                <strong>Naturalistic Observation:</strong> Recording behavior in natural environments without intervention.<br>
+                                <em>Strength: High ecological validity. Risk: Observer bias & Hawthorne Effect.</em><br><br>
+                                <strong>Case Study:</strong> In-depth investigation of an individual, group, or rare phenomenon.<br>
+                                <em>Strength: Rich qualitative data. Risk: Low generalizability.</em>
+                            </p>
+                        </div>
+                        <div class="bg-montano-softWhite p-3 rounded-xl border border-montano-lightBlue">
+                            <span class="text-xs font-bold text-montano-teal block mb-1">Ecological Validity</span>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-montano-blue h-3 rounded-full w-[90%]"></div>
+                            </div>
+                            <span class="text-xs text-right block mt-1 font-semibold text-montano-blue">Real-world natural setting</span>
+                        </div>
+                    </div>
+
+                    <!-- Surveys & Interviews -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-montano-teal shadow-md flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-3 text-montano-teal mb-3">
+                                <i class="fa-solid fa-clipboard-question text-2xl"></i>
+                                <h3 class="text-lg font-bold">Surveys & Interviews</h3>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">
+                                <strong>Surveys:</strong> Self-report questionnaires administered to large samples.<br>
+                                <em>Strength: Rapid data collection. Risk: Social desirability bias & response bias.</em><br><br>
+                                <strong>Interviews:</strong> Structured or semi-structured face-to-face dialogues.<br>
+                                <em>Strength: Nuanced insight. Risk: Interviewer bias & time intensive.</em>
+                            </p>
+                        </div>
+                        <div class="bg-montano-softWhite p-3 rounded-xl border border-montano-olive">
+                            <span class="text-xs font-bold text-montano-olive block mb-1">Sample Representation</span>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-montano-teal h-3 rounded-full w-[85%]"></div>
+                            </div>
+                            <span class="text-xs text-right block mt-1 font-semibold text-montano-teal">Large-scale quantitative reach</span>
+                        </div>
+                    </div>
+
+                    <!-- Correlational Studies -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-montano-olive shadow-md flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-3 text-montano-olive mb-3">
+                                <i class="fa-solid fa-chart-line text-2xl"></i>
+                                <h3 class="text-lg font-bold">Correlational Studies</h3>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">
+                                <strong>Correlational Research:</strong> Statistical measurement of the relationship between two naturally occurring variables (Correlation Coefficient: <em>r</em> from -1.0 to +1.0).<br><br>
+                                <strong class="text-red-600">Golden Rule:</strong> <em>Correlation does NOT imply causation!</em> Third variables (confounding factors) may explain the link.
+                            </p>
+                        </div>
+                        <div class="bg-montano-softWhite p-3 rounded-xl border border-montano-yellow">
+                            <span class="text-xs font-bold text-montano-blue block mb-1">Causality Protection</span>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-montano-yellow h-3 rounded-full w-[95%]"></div>
+                            </div>
+                            <span class="text-xs text-right block mt-1 font-semibold text-montano-blue">Identifies trends, not cause-and-effect</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Method Strengths, Limitations & Biases Comparison -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-300 shadow-md">
+                    <h3 class="text-xl font-extrabold text-montano-blue mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-scale-balanced text-montano-yellow"></i> Method Matching & Bias Mitigation Matrix
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-montano-blue text-white font-bold">
+                                    <th class="p-3 rounded-tl-lg">Research Method</th>
+                                    <th class="p-3">Best Applied When...</th>
+                                    <th class="p-3">Primary Strengths</th>
+                                    <th class="p-3">Limitations & Key Biases</th>
+                                    <th class="p-3 rounded-tr-lg">Control / Mitigation Strategy</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-montano-softWhite">
+                                <tr>
+                                    <td class="p-3 font-bold text-montano-blue">Naturalistic Obs.</td>
+                                    <td class="p-3">Studying spontaneous behaviors in real-world settings.</td>
+                                    <td class="p-3">High realism; uninfluenced by lab settings.</td>
+                                    <td class="p-3">Hawthorne Effect (acting differently when watched); Observer Bias.</td>
+                                    <td class="p-3">Unobtrusive observation (hidden cameras or cameras at distance).</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold text-montano-teal">Case Study</td>
+                                    <td class="p-3">Investigating rare neurological conditions or unique situations.</td>
+                                    <td class="p-3">Deeply detailed analysis; generates future hypotheses.</td>
+                                    <td class="p-3">Cannot generalize to general population; Subjective interpretation.</td>
+                                    <td class="p-3">Triangulate data using multiple testing instruments.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold text-montano-olive">Surveys & Polls</td>
+                                    <td class="p-3">Gathering self-reported attitudes across large groups quickly.</td>
+                                    <td class="p-3">Cost-effective; easy to quantify statistically.</td>
+                                    <td class="p-3">Social Desirability Bias (lying to look good); Response Rate Bias.</td>
+                                    <td class="p-3">Ensure complete participant anonymity & neutral wording.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold text-montano-blue">Correlational</td>
+                                    <td class="p-3">Evaluating relationships where experimental manipulation is unethical.</td>
+                                    <td class="p-3">Predicts outcomes; allows study of non-manipulable variables.</td>
+                                    <td class="p-3">Directionality problem; Third-Variable (Confounding) Problem.</td>
+                                    <td class="p-3">Use longitudinal tracking and partial correlation analysis.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: Solved Examples (15 Examples) -->
+            <section id="tab2" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-2xl border border-gray-200 gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-montano-blue">15 Solved Examples: Descriptive Methods in Action</h2>
+                        <p class="text-xs text-gray-600">Examine real-world research scenarios across 3 levels. Click the speaker icon to listen to the analysis.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="filterExamples('all')" class="ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-montano-blue text-white">All (15)</button>
+                        <button onclick="filterExamples('basic')" class="ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 1 Basic</button>
+                        <button onclick="filterExamples('intermediate')" class="ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 2 Interm.</button>
+                        <button onclick="filterExamples('advanced')" class="ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 3 Adv.</button>
+                    </div>
+                </div>
+
+                <div id="examples-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Populated dynamically via JavaScript -->
+                </div>
+            </section>
+
+            <!-- TAB 3: Interactive Voice Simulator & Method Dashboard -->
+            <section id="tab3" class="tab-content hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    
+                    <!-- Voice Simulator Controls (7 cols) -->
+                    <div class="lg:col-span-7 bg-white p-6 rounded-2xl border-2 border-montano-blue shadow-md flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between border-b pb-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-montano-blue text-white flex items-center justify-center font-bold">
+                                        <i class="fa-solid fa-user-doctor"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-montano-blue">Dr. Montano - Descriptive Methodology Advisor</h3>
+                                        <span class="text-xs text-montano-teal font-semibold">Interactive Oral Defense Simulator</span>
+                                    </div>
+                                </div>
+                                <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span> Speech Engine Ready
+                                </span>
+                            </div>
+
+                            <!-- Mentor Dialogue Box -->
+                            <div class="bg-montano-softWhite p-4 rounded-xl border border-montano-lightBlue mb-4">
+                                <p id="mentor-speech" class="text-sm text-gray-800 font-semibold leading-relaxed">
+                                    "Welcome to the Methodology Lab! Scenario: A researcher wants to study how high school students interact in cafeteria seating without interfering with their natural behavior. Which descriptive method should they use, and what major bias (such as the Hawthorne Effect or Observer Bias) must they guard against?"
+                                </p>
+                                <button onclick="speakText(document.getElementById('mentor-speech').innerText)" class="mt-2 text-xs font-bold text-montano-blue hover:text-montano-teal flex items-center gap-1">
+                                    <i class="fa-solid fa-volume-high"></i> Replay Prompt Audio
+                                </button>
+                            </div>
+
+                            <!-- Voice Input Controls -->
+                            <div class="space-y-3">
+                                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Your Spoken / Written Method Defense</label>
+                                <div class="flex gap-2">
+                                    <button id="mic-btn" onclick="toggleSpeechRecognition()" class="flex-1 bg-montano-blue hover:bg-montano-teal text-white py-3 px-4 rounded-xl font-bold text-sm shadow flex items-center justify-center gap-2 transition-all">
+                                        <i class="fa-solid fa-microphone text-montano-yellow text-lg"></i>
+                                        <span id="mic-btn-text">Start Speaking Answer</span>
+                                    </button>
+                                </div>
+                                
+                                <p class="text-xs text-gray-500 italic text-center">Or type your methodology defense below if mic access is unavailable:</p>
+
+                                <textarea id="user-input-text" rows="3" placeholder="Example: They should use naturalistic observation because it observes subjects in their real environment. They must avoid the Hawthorne Effect by remaining unobtrusive..." 
+                                          class="w-full p-3 border-2 border-gray-200 rounded-xl text-sm focus:border-montano-blue focus:outline-none transition"></textarea>
+                                
+                                <button onclick="evaluateUserResponse()" class="w-full bg-montano-yellow hover:bg-amber-400 text-montano-blue font-extrabold py-3 px-4 rounded-xl text-sm shadow transition">
+                                    Analyze Method Defense
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Speech Status Notification -->
+                        <div id="speech-status" class="mt-4 text-xs font-bold text-gray-500 text-center flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-circle-info"></i> Ready for voice/text entry. State your chosen method, justification, and bias control.
+                        </div>
+                    </div>
+
+                    <!-- Live Performance Dashboard (5 cols) -->
+                    <div class="lg:col-span-5 bg-white p-6 rounded-2xl border-2 border-montano-teal shadow-md flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-lg font-extrabold text-montano-blue border-b pb-2 mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-chart-pie text-montano-yellow"></i> Live Performance Dashboard
+                            </h3>
+
+                            <!-- Score Meters -->
+                            <div class="space-y-4">
+                                <!-- Speech Clarity -->
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold mb-1">
+                                        <span class="text-gray-700">Pronunciation & Speech Clarity Score</span>
+                                        <span id="score-clarity-val" class="text-montano-blue">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-3">
+                                        <div id="score-clarity-bar" class="bg-montano-blue h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Method Accuracy -->
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold mb-1">
+                                        <span class="text-gray-700">Topic / Method Accuracy Score</span>
+                                        <span id="score-accuracy-val" class="text-montano-teal">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-3">
+                                        <div id="score-accuracy-bar" class="bg-montano-teal h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Academic Etiquette -->
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold mb-1">
+                                        <span class="text-gray-700">Politeness & Academic Etiquette Score</span>
+                                        <span id="score-etiquette-val" class="text-montano-olive">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-3">
+                                        <div id="score-etiquette-bar" class="bg-montano-olive h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Key Scientific Terms Detected -->
+                            <div class="mt-6">
+                                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Detected Methodological Keywords</label>
+                                <div id="detected-terms-container" class="flex flex-wrap gap-1.5 min-h-[40px] p-2 bg-montano-softWhite rounded-xl border border-gray-200">
+                                    <span class="text-xs text-gray-400 italic">No method terms detected yet. Speak or type your defense.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Pedagogical Feedback Container -->
+                        <div class="mt-6 bg-montano-softWhite p-4 rounded-xl border border-montano-lightBlue">
+                            <h4 class="text-xs font-extrabold text-montano-blue uppercase tracking-wider mb-1 flex items-center gap-1">
+                                <i class="fa-solid fa-graduation-cap"></i> AI Pedagogical Feedback
+                            </h4>
+                            <p id="ai-feedback-text" class="text-xs text-gray-700 leading-relaxed">
+                                Awaiting response. Complete the scenario prompt to receive instant automated feedback on your descriptive method defense.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: Critical Reflection Questions & Project Checkpoint -->
+            <section id="tab4" class="tab-content hidden space-y-6">
+                <!-- Method Matching & Bias Activity -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-montano-teal text-white text-xs font-bold px-3 py-1 rounded-full uppercase">15-Min Guided Workshop</span>
+                        <h2 class="text-xl font-extrabold text-montano-blue">Method Selection & Bias Control Analysis</h2>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-6">Read each scenario and select the best descriptive method, then explain how you will minimize potential bias.</p>
+
+                    <div class="space-y-6">
+                        <!-- Reflection 1 -->
+                        <div class="p-4 bg-montano-softWhite rounded-xl border-l-4 border-montano-blue">
+                            <span class="text-xs font-bold text-montano-blue uppercase">Scenario #1: Studying Rare Brain Conditions</span>
+                            <h3 class="font-bold text-sm text-gray-800 mt-1">"A neuroscientist wants to study a patient who developed a unique ability to recall every day of their life following a mild temporal lobe trauma."</h3>
+                            <p class="text-xs text-gray-600 mb-3">Which descriptive method is required here, and what is its primary limitation?</p>
+                            <textarea rows="2" class="w-full p-3 border rounded-xl text-sm focus:border-montano-blue focus:outline-none" placeholder="Example: Case Study. The primary limitation is low generalizability because findings from one unique brain may not apply to everyone..."></textarea>
+                        </div>
+
+                        <!-- Reflection 2 -->
+                        <div class="p-4 bg-montano-softWhite rounded-xl border-l-4 border-montano-teal">
+                            <span class="text-xs font-bold text-montano-teal uppercase">Scenario #2: Measuring Adolescent Attitudes</span>
+                            <h3 class="font-bold text-sm text-gray-800 mt-1">"A school wants to gather feedback from 1,200 students regarding campus cafeteria nutrition choices."</h3>
+                            <p class="text-xs text-gray-600 mb-3">Which method is most efficient, and how will you prevent Social Desirability Bias?</p>
+                            <textarea rows="2" class="w-full p-3 border rounded-xl text-sm focus:border-montano-teal focus:outline-none" placeholder="Example: Survey / Questionnaire. Social Desirability Bias can be controlled by ensuring total anonymity and non-judgmental question wording..."></textarea>
+                        </div>
+
+                        <!-- 10-Min Project 1 Checkpoint -->
+                        <div class="p-5 bg-white rounded-xl border-2 border-montano-yellow shadow-md">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="bg-montano-yellow text-montano-blue text-xs font-extrabold px-3 py-1 rounded-full uppercase">10-Min Project 1 Checkpoint</span>
+                                <h3 class="font-bold text-sm text-montano-blue">Descriptive Method Alignment for Student Research Proposals</h3>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-3">Fill out your Project 1 methodology draft below for instructor review.</p>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-montano-blue mb-1">My Project Research Question:</label>
+                                    <input id="proj-q" type="text" placeholder="e.g., How do study breaks affect student focus?" class="w-full p-2 border rounded-lg text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-montano-teal mb-1">Selected Descriptive Method:</label>
+                                    <select id="proj-method" class="w-full p-2 border rounded-lg text-xs bg-white">
+                                        <option value="">-- Choose Method --</option>
+                                        <option value="Naturalistic Observation">Naturalistic Observation</option>
+                                        <option value="Survey / Questionnaire">Survey / Questionnaire</option>
+                                        <option value="Structured Interview">Structured Interview</option>
+                                        <option value="Case Study">Case Study</option>
+                                        <option value="Correlational Study">Correlational Study</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-montano-olive mb-1">Target Sample & Setting:</label>
+                                    <input id="proj-sample" type="text" placeholder="e.g., 50 10th-grade students in the study hall" class="w-full p-2 border rounded-lg text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-montano-blue mb-1">Identified Potential Bias & Control Plan:</label>
+                                    <input id="proj-bias" type="text" placeholder="e.g., Response bias; controlled by anonymous Google Forms" class="w-full p-2 border rounded-lg text-xs">
+                                </div>
+                            </div>
+
+                            <button onclick="saveProjectCheckpoint()" class="bg-montano-blue hover:bg-montano-teal text-white font-bold text-xs px-4 py-2 rounded-lg shadow transition">
+                                Submit Project 1 Method Draft
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: Formative Evaluation (15 Practice Problems) -->
+            <section id="tab5" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-2xl border border-gray-200 gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-montano-blue">15 Evaluative Practice Problems</h2>
+                        <p class="text-xs text-gray-600">Identify descriptive methods, detect research biases, and evaluate correlational claims. Toggle step-by-step solutions.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="filterProblems('all')" class="prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-montano-blue text-white">All (15)</button>
+                        <button onclick="filterProblems('basic')" class="prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 1 Basic</button>
+                        <button onclick="filterProblems('intermediate')" class="prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 2 Interm.</button>
+                        <button onclick="filterProblems('advanced')" class="prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 3 Adv.</button>
+                    </div>
+                </div>
+
+                <!-- Formative Exercises List -->
+                <div id="problems-container" class="space-y-4">
+                    <!-- Populated dynamically via JavaScript -->
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-8 pt-4 border-t border-gray-300 text-center text-xs text-gray-600 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div>
+                <strong>Colegio Montano</strong> &copy; 2026 - Senior Instructional Design & Interactive Educational Web
+            </div>
+            <div class="text-montano-teal font-semibold">
+                High School Department | Psychology B2 Curriculum (Guide 3)
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- JAVASCRIPT LOGIC & INTERACTION ENGINE -->
+    <script>
+        // DATA STRUCTURES: 15 Solved Examples (Guide 3 Focus)
+        const solvedExamples = [
+            // Level 1: Basic (5)
+            { 
+                id: 1, level: 'basic', 
+                text: 'A researcher watches children on a playground from behind a one-way mirror without intervening to study sharing behavior.', 
+                type: 'Naturalistic Observation', 
+                explanation: 'Observed in a natural setting without manipulation. One-way mirror avoids the Hawthorne Effect.', 
+                tags: ['Observation', 'Playground', 'Basic'] 
+            },
+            { 
+                id: 2, level: 'basic', 
+                text: 'Distributing a 10-question digital questionnaire to 300 high schoolers regarding their daily sleeping habits.', 
+                type: 'Survey Method', 
+                explanation: 'A quick, cost-effective way to gather quantitative self-report data across a large sample.', 
+                tags: ['Survey', 'Sleep', 'Basic'] 
+            },
+            { 
+                id: 3, level: 'basic', 
+                text: 'Conducting a deep 2-hour face-to-face qualitative conversation with a stroke survivor about recovery feelings.', 
+                type: 'Semi-Structured Interview', 
+                explanation: 'Provides nuanced, detailed emotional insights directly from the individual.', 
+                tags: ['Interview', 'Qualitative'] 
+            },
+            { 
+                id: 4, level: 'basic', 
+                text: 'Investigating a rare genetic memory disorder in a single patient across 5 years.', 
+                type: 'Case Study Design', 
+                explanation: 'Focuses deeply on a rare phenomenon that cannot be ethically or practically created in a lab.', 
+                tags: ['Case Study', 'Rare Condition'] 
+            },
+            { 
+                id: 5, level: 'basic', 
+                text: 'Finding that as daily physical exercise increases, self-reported stress levels decrease.', 
+                type: 'Negative Correlation', 
+                explanation: 'Variables move in opposite directions (Exercise ↑, Stress ↓).', 
+                tags: ['Correlation', 'Negative'] 
+            },
+
+            // Level 2: Intermediate (5)
+            { 
+                id: 6, level: 'intermediate', 
+                text: 'A survey finds 95% of teens claim they never copy homework, but anonymous audits show 40% do.', 
+                type: 'Social Desirability Bias', 
+                explanation: 'Participants answered questions to present themselves favorably rather than truthfully.', 
+                tags: ['Survey Bias', 'Social Desirability'] 
+            },
+            { 
+                id: 7, level: 'intermediate', 
+                text: 'Students perform significantly faster during a reading test when they notice an observer with a clipboard.', 
+                type: 'Hawthorne Effect', 
+                explanation: 'Behavior altered simply due to awareness of being observed.', 
+                tags: ['Observation Bias', 'Hawthorne'] 
+            },
+            { 
+                id: 8, level: 'intermediate', 
+                text: 'Finding a strong positive correlation between ice cream sales and shark attacks in coastal towns.', 
+                type: 'Third-Variable (Confounding) Problem', 
+                explanation: 'Ice cream does not cause shark attacks; warm summer temperature is the confounding 3rd variable.', 
+                tags: ['Correlation', 'Third Variable'] 
+            },
+            { 
+                id: 9, level: 'intermediate', 
+                text: 'An observer recording playground conflict marks aggressive tags more frequently for boys than girls.', 
+                type: 'Observer Bias', 
+                explanation: 'The researcher’s unconscious expectations or stereotypes influenced how behaviors were coded.', 
+                tags: ['Observer Bias', 'Coding'] 
+            },
+            { 
+                id: 10, level: 'intermediate', 
+                text: 'A company surveys customers by sending emails, but only extremely angry or happy customers respond.', 
+                type: 'Voluntary Response Bias', 
+                explanation: 'Self-selected samples produce unrepresentative, extreme data points.', 
+                tags: ['Sampling Bias', 'Response Rate'] 
+            },
+
+            // Level 3: Advanced (5)
+            { 
+                id: 11, level: 'advanced', 
+                text: 'Critiquing Phineas Gage’s famous 1848 brain injury study regarding modern generalizability.', 
+                type: 'Case Study Generalizability Limits', 
+                explanation: 'Individual brain damage, 19th-century medical care, and unique personality preclude universal conclusions.', 
+                tags: ['Case Study', 'Phineas Gage'] 
+            },
+            { 
+                id: 12, level: 'advanced', 
+                text: 'Designing a study using Inter-Rater Reliability to eliminate subjective coding in naturalistic video data.', 
+                type: 'Observer Bias Mitigation', 
+                explanation: 'Two independent blind coders score video logs; correlation between scores determines reliability.', 
+                tags: ['Inter-Rater', 'Reliability'] 
+            },
+            { 
+                id: 13, level: 'advanced', 
+                text: 'Analyzing why a correlation of r = +0.85 between study hours and GPA does not allow a principal to guarantee higher grades by forcing 4 extra study hours.', 
+                type: 'Causation vs Correlation Analysis', 
+                explanation: 'Correlation proves covariance, not cause. Motivation, baseline ability, or quality of study remain unmeasured.', 
+                tags: ['Correlational Limit', 'Causation'] 
+            },
+            { 
+                id: 14, level: 'advanced', 
+                text: 'Comparing Structured vs. Unstructured Interviews in clinical intake settings.', 
+                type: 'Methodological Trade-off', 
+                explanation: 'Structured maximizes standardization and reliability; unstructured maximizes flexibility and rapport.', 
+                tags: ['Interviews', 'Trade-off'] 
+            },
+            { 
+                id: 15, level: 'advanced', 
+                text: 'Evaluating how Wording Effects in survey questions ("Should taxpayers fund costly programs?" vs "Should society support public education?") shift results.', 
+                type: 'Survey Framing Effect', 
+                explanation: 'Subtle changes in loaded terminology manipulate participant framing and skew response distributions.', 
+                tags: ['Wording Effects', 'Framing'] 
+            }
+        ];
+
+        // DATA STRUCTURES: 15 Formative Practice Problems
+        const formativeProblems = [
+            // Level 1: Basic (5)
+            { 
+                id: 1, level: 'basic', 
+                prompt: 'Identify the descriptive method: "A psychologist records how many times toddlers drop toys during a 30-minute daycare session without intervening."', 
+                solution: 'Method: Naturalistic Observation.\nReason: Behavior is recorded in a natural setting (daycare) without researcher manipulation or interference.' 
+            },
+            { 
+                id: 2, level: 'basic', 
+                prompt: 'Identify the descriptive method: "A researcher sends a 5-question Google Form about caffeine intake to 500 college freshmen."', 
+                solution: 'Method: Survey / Questionnaire.\nReason: Rapidly collects self-reported quantitative data across a wide sample group.' 
+            },
+            { 
+                id: 3, level: 'basic', 
+                prompt: 'State the type of correlation: "As student attendance decreases, overall test scores also decrease."', 
+                solution: 'Type: POSITIVE Correlation.\nReason: Both variables move in the SAME direction (Attendance ↓, Test Scores ↓).' 
+            },
+            { 
+                id: 4, level: 'basic', 
+                prompt: 'Name the major limitation of a single case study.', 
+                solution: 'Limitation: Low Generalizability (External Validity).\nReason: Findings from one unique case cannot automatically be applied to the broader population.' 
+            },
+            { 
+                id: 5, level: 'basic', 
+                prompt: 'What is the Hawthorne Effect?', 
+                solution: 'Definition: A phenomenon where study participants alter or improve their natural behavior simply because they know they are being observed.' 
+            },
+
+            // Level 2: Intermediate (5)
+            { 
+                id: 6, level: 'intermediate', 
+                prompt: 'Explain why a correlation coefficient of r = -0.82 indicates a stronger relationship than r = +0.55.', 
+                solution: 'Explanation: The strength of a correlation is determined by the absolute value |r|. |-0.82| = 0.82, which is closer to 1.0 than 0.55, regardless of the negative sign.' 
+            },
+            { 
+                id: 7, level: 'intermediate', 
+                prompt: 'Identify the bias: "In a face-to-face interview, a student lies about how often they cheat on exams because they feel embarrassed."', 
+                solution: 'Bias: Social Desirability Bias.\nMitigation: Use anonymous self-administered surveys or digital input instead of face-to-face interviews.' 
+            },
+            { 
+                id: 8, level: 'intermediate', 
+                prompt: 'A news headline claims: "Reading Books Causes People to Live Longer!" based on a correlational study. What logical fallacy was committed?', 
+                solution: 'Logical Fallacy: Inferring Causation from Correlation.\nConfounding Variables: Income, education level, access to healthcare, and overall healthy lifestyle factors were likely unmeasured.' 
+            },
+            { 
+                id: 9, level: 'intermediate', 
+                prompt: 'How can a researcher prevent Observer Bias during naturalistic video coding?', 
+                solution: 'Prevention Strategy: 1) Use clear, objective operational definitions for behaviors. 2) Employ double-blind coders who do not know the study’s hypothesis. 3) Calculate Inter-Rater Reliability.' 
+            },
+            { 
+                id: 10, level: 'intermediate', 
+                prompt: 'Differentiate between structured and semi-structured interviews.', 
+                solution: 'Structured: Rigorous, fixed script of identical questions in exact order.\nSemi-Structured: Core set of open questions with flexibility to probe further based on response.' 
+            },
+
+            // Level 3: Advanced (5)
+            { 
+                id: 11, level: 'advanced', 
+                prompt: 'Critique this survey design: "Don’t you agree that strict phone bans in school harm student self-regulation? (Yes/No)"', 
+                solution: 'Critique: Leading / Loaded Question (Wording Bias).\nCorrection: "What impact, if any, do school phone policies have on student self-regulation?"' 
+            },
+            { 
+                id: 12, level: 'advanced', 
+                prompt: 'Explain the Directionality Problem in correlational research with an example.', 
+                solution: 'Explanation: Knowing that Variable A and B are correlated does not reveal whether A causes B or B causes A.\nExample: Depression and insomnia are correlated. Does depression cause insomnia, or does insomnia cause depression?' 
+            },
+            { 
+                id: 13, level: 'advanced', 
+                prompt: 'A researcher wants to study rare savant syndrome in an artist. Design a multi-method descriptive protocol.', 
+                solution: 'Protocol: 1) Case Study framework. 2) Naturalistic Observation of art creation. 3) Semi-structured interviews with family. 4) Standardized cognitive battery testing.' 
+            },
+            { 
+                id: 14, level: 'advanced', 
+                prompt: 'Explain how Sampling Bias threatens the external validity of a survey on adolescent mental health if distributed only at an elite private evening academy.', 
+                solution: 'Explanation: The sample lacks random representation of socioeconomic diversity. Findings cannot be generalized to public school adolescents or broader demographics.' 
+            },
+            { 
+                id: 15, level: 'advanced', 
+                prompt: 'Compare Naturalistic Observation and Laboratory Observation regarding internal and ecological validity.', 
+                solution: 'Naturalistic Obs: High Ecological Validity (real setting), Low Internal Validity (uncontrolled variables).\nLab Obs: High Internal Validity (controlled setting), Low Ecological Validity (artificial behavior).' 
+            }
+        ];
+
+        // RENDER FUNCTIONS
+        function renderExamples(filter = 'all') {
+            const container = document.getElementById('examples-container');
+            container.innerHTML = '';
+            
+            const filtered = solvedExamples.filter(ex => filter === 'all' || ex.level === filter);
+
+            filtered.forEach(ex => {
+                const badgeColor = ex.level === 'basic' ? 'bg-blue-100 text-montano-blue border-blue-300' :
+                                   ex.level === 'intermediate' ? 'bg-teal-100 text-montano-teal border-teal-300' :
+                                   'bg-amber-100 text-amber-800 border-amber-300';
+                
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[10px] uppercase font-black px-2.5 py-0.5 rounded-full border ${badgeColor}">
+                                ${ex.level.toUpperCase()}
+                            </span>
+                            <button onclick="speakText('${escapeQuotes(ex.text)}')" class="text-montano-blue hover:text-montano-teal transition p-1" title="Listen to audio explanation">
+                                <i class="fa-solid fa-volume-high text-lg"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs font-bold text-gray-800 mb-3 italic">"${ex.text}"</p>
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-gray-200 mb-2">
+                            <span class="text-[11px] font-black text-montano-blue block">Method/Concept: ${ex.type}</span>
+                            <p class="text-[11px] text-gray-600 mt-1">${ex.explanation}</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mt-2">
+                        ${ex.tags.map(tag => `<span class="text-[9px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-semibold">#${tag}</span>`).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderProblems(filter = 'all') {
+            const container = document.getElementById('problems-container');
+            container.innerHTML = '';
+
+            const filtered = formativeProblems.filter(p => filter === 'all' || p.level === filter);
+
+            filtered.forEach((p) => {
+                const badgeColor = p.level === 'basic' ? 'bg-blue-100 text-montano-blue border-blue-300' :
+                                   p.level === 'intermediate' ? 'bg-teal-100 text-montano-teal border-teal-300' :
+                                   'bg-amber-100 text-amber-800 border-amber-300';
+
+                const item = document.createElement('div');
+                item.className = "bg-white p-5 rounded-2xl border border-gray-200 shadow-sm";
+                item.innerHTML = `
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-montano-blue text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">${p.id}</span>
+                            <span class="text-xs font-black uppercase tracking-wide px-2.5 py-0.5 rounded-full border ${badgeColor}">Level: ${p.level}</span>
+                        </div>
+                        <button onclick="toggleSolution('sol-${p.id}')" class="bg-montano-softWhite hover:bg-gray-200 text-montano-blue border border-montano-lightBlue text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-eye text-montano-yellow"></i> <span id="btn-txt-sol-${p.id}">Show Solution</span>
+                        </button>
+                    </div>
+                    <p class="text-sm font-bold text-gray-800 mb-2">${p.prompt}</p>
+                    <div id="sol-${p.id}" class="hidden mt-3 p-4 bg-montano-softWhite border-l-4 border-montano-teal rounded-r-xl">
+                        <span class="text-xs font-extrabold text-montano-teal uppercase tracking-wider block mb-1"><i class="fa-solid fa-check-circle"></i> Methodological Solution:</span>
+                        <p class="text-xs text-gray-700 font-medium leading-relaxed whitespace-pre-line">${p.solution}</p>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // TAB SWITCHING LOGIC
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(`btn-${tabId}`).classList.add('active');
+        }
+
+        function filterExamples(level) {
+            document.querySelectorAll('.ex-filter-btn').forEach(btn => {
+                btn.className = "ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700";
+            });
+            event.target.className = "ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-montano-blue text-white";
+            renderExamples(level);
+        }
+
+        function filterProblems(level) {
+            document.querySelectorAll('.prob-filter-btn').forEach(btn => {
+                btn.className = "prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700";
+            });
+            event.target.className = "prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-montano-blue text-white";
+            renderProblems(level);
+        }
+
+        function toggleSolution(solId) {
+            const solDiv = document.getElementById(solId);
+            const btnTxt = document.getElementById(`btn-txt-${solId}`);
+            if (solDiv.classList.contains('hidden')) {
+                solDiv.classList.remove('hidden');
+                btnTxt.innerText = "Hide Solution";
+            } else {
+                solDiv.classList.add('hidden');
+                btnTxt.innerText = "Show Solution";
+            }
+        }
+
+        // FULLSCREEN TOGGLE API
+        function toggleFullscreen() {
+            const whiteboard = document.getElementById('whiteboard');
+            if (!document.fullscreenElement) {
+                if (whiteboard.requestFullscreen) {
+                    whiteboard.requestFullscreen();
+                } else if (whiteboard.webkitRequestFullscreen) {
+                    whiteboard.webkitRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // TEXT-TO-SPEECH (TTS) SYNTHESIS
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.95;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Text-to-Speech audio is not supported in this browser.");
+            }
+        }
+
+        function escapeQuotes(str) {
+            return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
+        }
+
+        // SPEECH RECOGNITION LOGIC
+        let recognition = null;
+        let isListening = false;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = function() {
+                isListening = true;
+                document.getElementById('mic-btn-text').innerText = "Listening... Speak Defense Now";
+                document.getElementById('mic-btn').classList.add('pulse-ring', 'bg-red-600');
+                document.getElementById('speech-status').innerHTML = '<span class="text-red-600 flex items-center gap-1"><i class="fa-solid fa-microphone animate-bounce"></i> Listening in English... State method & bias controls...</span>';
+            };
+
+            recognition.onresult = function(event) {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript;
+                }
+                document.getElementById('user-input-text').value = transcript;
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Speech Recognition Error:", event.error);
+                stopListeningState("Error captured. Use text box or re-try mic.");
+            };
+
+            recognition.onend = function() {
+                stopListeningState("Speech input captured. Click 'Analyze Method Defense' for live evaluation.");
+            };
+        } else {
+            document.getElementById('speech-status').innerText = "Web Speech API not supported on this browser. You can type your response below.";
+        }
+
+        function toggleSpeechRecognition() {
+            if (!recognition) {
+                alert("Web Speech Recognition API is not supported in your browser. Please type your answer.");
+                return;
+            }
+
+            if (isListening) {
+                recognition.stop();
+            } else {
+                try {
+                    recognition.start();
+                } catch(e) {
+                    console.error(e);
+                }
+            }
+        }
+
+        function stopListeningState(msg) {
+            isListening = false;
+            document.getElementById('mic-btn-text').innerText = "Start Speaking Answer";
+            document.getElementById('mic-btn').classList.remove('pulse-ring', 'bg-red-600');
+            document.getElementById('speech-status').innerHTML = `<i class="fa-solid fa-circle-info"></i> ${msg}`;
+        }
+
+        // REAL-TIME EVALUATION ENGINE FOR PERFORMANCE DASHBOARD
+        function evaluateUserResponse() {
+            const text = document.getElementById('user-input-text').value.trim();
+            if (!text) {
+                alert("Please speak or write your methodology defense before evaluating.");
+                return;
+            }
+
+            const lower = text.toLowerCase();
+
+            // Key Research Terms for Guide 3
+            const terms = [
+                { term: 'naturalistic observation', tag: 'Naturalistic Obs' },
+                { term: 'observation', tag: 'Observation' },
+                { term: 'hawthorne', tag: 'Hawthorne Effect' },
+                { term: 'survey', tag: 'Survey Method' },
+                { term: 'case study', tag: 'Case Study' },
+                { term: 'correlation', tag: 'Correlational Design' },
+                { term: 'bias', tag: 'Bias Control' },
+                { term: 'unobtrusive', tag: 'Unobtrusive Technique' },
+                { term: 'desirability', tag: 'Social Desirability' }
+            ];
+
+            let clarityScore = 75;
+            let accuracyScore = 30;
+            let etiquetteScore = 80;
+            const detected = [];
+
+            // Politeness check
+            if (lower.includes('please') || lower.includes('thank you') || lower.includes('dr.') || lower.includes('method') || lower.includes('because')) {
+                etiquetteScore = 95;
+            }
+
+            // Word length bonus for clarity
+            if (text.length > 50) clarityScore = 90;
+
+            terms.forEach(item => {
+                if (lower.includes(item.term)) {
+                    accuracyScore += 20;
+                    if (!detected.includes(item.tag)) detected.push(item.tag);
+                }
+            });
+
+            clarityScore = Math.min(100, clarityScore);
+            accuracyScore = Math.min(100, accuracyScore);
+            etiquetteScore = Math.min(100, etiquetteScore);
+
+            // Update Dashboard UI Scores
+            updateDashboardMeters(clarityScore, accuracyScore, etiquetteScore);
+
+            // Update Detected Key Terms Container
+            const termsContainer = document.getElementById('detected-terms-container');
+            if (detected.length > 0) {
+                termsContainer.innerHTML = detected.map(t => `<span class="bg-montano-blue text-white text-xs font-bold px-2 py-1 rounded-lg">✓ ${t}</span>`).join('');
+            } else {
+                termsContainer.innerHTML = `<span class="text-xs text-amber-700 italic">No specific method keywords detected. Mention 'Naturalistic Observation', 'Hawthorne Effect', or 'Unobtrusive observation'.</span>`;
+            }
+
+            // Generate AI Pedagogical Feedback
+            let feedback = "";
+            const avg = (clarityScore + accuracyScore + etiquetteScore) / 3;
+            if (avg >= 80) {
+                feedback = `Excellent defense! You selected the proper descriptive method (Naturalistic Observation) and correctly identified the Hawthorne Effect and unobtrusive controls.`;
+            } else if (avg >= 55) {
+                feedback = `Good reasoning! You mentioned relevant methods, but make sure to explicitly name how you will avoid participant or observer bias.`;
+            } else {
+                feedback = `Initial defense recorded. Focus on matching natural Settings to Naturalistic Observation and mitigating the Hawthorne Effect.`;
+            }
+
+            document.getElementById('ai-feedback-text').innerText = feedback;
+
+            // Trigger mentor voice response using Speech Synthesis
+            speakText(`Analysis complete. ${feedback}`);
+        }
+
+        function updateDashboardMeters(clarity, accuracy, etiquette) {
+            document.getElementById('score-clarity-val').innerText = `${clarity}%`;
+            document.getElementById('score-clarity-bar').style.width = `${clarity}%`;
+
+            document.getElementById('score-accuracy-val').innerText = `${accuracy}%`;
+            document.getElementById('score-accuracy-bar').style.width = `${accuracy}%`;
+
+            document.getElementById('score-etiquette-val').innerText = `${etiquette}%`;
+            document.getElementById('score-etiquette-bar').style.width = `${etiquette}%`;
+        }
+
+        function saveProjectCheckpoint() {
+            const q = document.getElementById('proj-q').value.trim();
+            const method = document.getElementById('proj-method').value;
+            const sample = document.getElementById('proj-sample').value.trim();
+            const bias = document.getElementById('proj-bias').value.trim();
+
+            if (!q || !method || !sample || !bias) {
+                alert("Please complete all four fields for your Project 1 Checkpoint before submitting.");
+            } else {
+                alert("Project 1 Method Draft submitted successfully! Your instructor will review your descriptive design.");
+            }
+        }
+
+        // INITIALIZATION ON PAGE LOAD
+        window.onload = function() {
+            renderExamples('all');
+            renderProblems('all');
+        };
+    </script>
+</body>
+</html>
